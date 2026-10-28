@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS sbwc_platform CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE sbwc_platform;
-
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     full_name VARCHAR(150) NOT NULL,
