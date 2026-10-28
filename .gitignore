@@ -1,0 +1,18 @@
+# Dependências
+node_modules/
+vendor/
+
+# Ambientes
+.env
+.env.*
+
+# Logs
+*.log
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Build / backup
+*.bak
+*.tmp

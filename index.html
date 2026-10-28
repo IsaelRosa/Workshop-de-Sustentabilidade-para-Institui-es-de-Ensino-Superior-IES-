@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8º Simpósio Brasileiro sobre Wetlands Construídos (SBWC)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- QRCode JS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        wetland: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        water: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- HEADER / NAVEGAÇÃO SUPERIOR -->
+    <header class="sticky top-0 z-50 bg-slate-900 text-white shadow-xl border-b border-emerald-800/50">
+        <!-- Top bar de avisos e contagem regressiva -->
+        <div class="bg-emerald-950 px-4 py-2 text-xs md:text-sm text-emerald-200 flex flex-wrap justify-between items-center border-b border-emerald-900">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span class="font-medium">8º SBWC • 04 dias de Inovação e Sustentabilidade</span>
+            </div>
+            <!-- Contagem Regressiva -->
+            <div class="flex items-center gap-3 font-mono font-semibold text-white bg-slate-900/60 px-3 py-1 rounded-full border border-emerald-500/30">
+                <i class="fa-regular font-sans text-xs text-emerald-400 fa-clock"></i>
+                <span id="countdown">Iniciando evento...</span>
+            </div>
+        </div>
+
+        <!-- Menu Principal -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-600 to-water-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-emerald-900/40">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <div>
+                        <div class="font-black text-lg md:text-xl tracking-tight leading-none text-white">8º <span class="text-emerald-400">SBWC</span></div>
+                        <div class="text-[10px] text-slate-300 font-medium tracking-wide">SIMPÓSIO BRASILEIRO SOBRE WETLANDS CONSTRUÍDOS</div>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
+                    <button onclick="navigateTo('home')" class="nav-btn px-3 py-2 rounded-lg hover:bg-slate-800 transition text-emerald-400" id="nav-home">Home</button>
+                    <button onclick="navigateTo('organizacao')" class="nav-btn px-3 py-2 rounded-lg hover:bg-slate-800 transition text-slate-200" id="nav-organizacao">Comissão</button>
+                    <button onclick="navigateTo('programacao')" class="nav-btn px-3 py-2 rounded-lg hover:bg-slate-800 transition text-slate-200" id="nav-programacao">Programação</button>
+                    <button onclick="navigateTo('inscricoes')" class="nav-btn px-3 py-2 rounded-lg hover:bg-slate-800 transition text-slate-200" id="nav-inscricoes">Inscrições</button>
+                    <button onclick="navigateTo('normas')" class="nav-btn px-3 py-2 rounded-lg hover:bg-slate-800 transition text-slate-200" id="nav-normas">Normas</button>
+                    <button onclick="navigateTo('anais')" class="nav-btn px-3 py-2 rounded-lg hover:bg-slate-800 transition text-slate-200" id="nav-anais">Anais</button>
+                    <button onclick="navigateTo('guia')" class="nav-btn px-3 py-2 rounded-lg hover:bg-slate-800 transition text-slate-200" id="nav-guia">Informações Úteis</button>
+                    <button onclick="navigateTo('validar-certificado')" class="nav-btn px-3 py-2 rounded-lg hover:bg-slate-800 transition text-slate-200" id="nav-validar-certificado">Validar Certificados</button>
+                </nav>
+
+                <!-- Action Portals -->
+                <div class="hidden md:flex items-center gap-2">
+                    <button onclick="openPortalModal(' congressista')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs px-3.5 py-2 rounded-lg shadow-md transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-graduate"></i> Congressista
+                    </button>
+                    <button onclick="openPortalModal('avaliador')" class="bg-water-700 hover:bg-water-600 text-white font-semibold text-xs px-3.5 py-2 rounded-lg shadow-md transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-microscope"></i> Avaliador
+                    </button>
+                    <button onclick="openPortalModal('cms')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs px-2.5 py-2 rounded-lg border border-slate-700 transition" title="Painel Admin CMS">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-6 space-y-2">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-slate-200 rounded-md hover:bg-slate-800">Home</button>
+            <button onclick="navigateTo('organizacao'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-slate-200 rounded-md hover:bg-slate-800">Comissão Organizadora</button>
+            <button onclick="navigateTo('programacao'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-slate-200 rounded-md hover:bg-slate-800">Programação Completa</button>
+            <button onclick="navigateTo('inscricoes'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-slate-200 rounded-md hover:bg-slate-800">Inscrições & Valores</button>
+            <button onclick="navigateTo('normas'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-slate-200 rounded-md hover:bg-slate-800">Normas de Submissão</button>
+            <button onclick="navigateTo('anais'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-slate-200 rounded-md hover:bg-slate-800">Anais do Evento</button>
+            <button onclick="navigateTo('guia'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-slate-200 rounded-md hover:bg-slate-800">Informações Úteis & Cidade</button>
+            <button onclick="navigateTo('validar-certificado'); toggleMobileMenu()" class="block w-full text-left px-3 py-2 text-slate-200 rounded-md hover:bg-slate-800">Validar Certificados</button>
+            
+            <div class="pt-4 border-t border-slate-800 grid grid-cols-2 gap-2">
+                <button onclick="openPortalModal('congressista'); toggleMobileMenu()" class="bg-emerald-600 text-white py-2 rounded-lg font-medium text-xs text-center">
+                    Área do Congressista
+                </button>
+                <button onclick="openPortalModal('avaliador'); toggleMobileMenu()" class="bg-water-700 text-white py-2 rounded-lg font-medium text-xs text-center">
+                    Área do Avaliador
+                </button>
+                <button onclick="openPortalModal('cms'); toggleMobileMenu()" class="col-span-2 bg-slate-800 text-slate-300 py-2 rounded-lg font-medium text-xs text-center border border-slate-700">
+                    Painel Administrativo (CMS)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER DE SEÇÕES DINÂMICAS -->
+    <main class="flex-grow">
+
+        <!-- ==================== HOME ==================== -->
+        <section id="sec-home" class="view-section">
+            <!-- Hero Banner Slider Rotativo Simulado -->
+            <div class="relative bg-gradient-to-r from-slate-900 via-emerald-950 to-water-950 text-white overflow-hidden py-16 lg:py-24 border-b border-emerald-900/40">
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#22c55e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-7 space-y-6">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+                                <i class="fa-solid fa-award"></i> Edição Nacional Especial de 04 Dias
+                            </div>
+                            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight text-white">
+                                Soluções Baseadas na Natureza para o <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-water-400">Saneamento Sustentável</span>
+                            </h1>
+                            <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+                                O principal fórum científico brasileiro sobre Wetland Construídos reunindo pesquisadores, profissionais, órgãos ambientais e gestores de saneamento para integrar ciência e prática.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-4 pt-2">
+                                <button onclick="openPortalModal('congressista')" class="bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-900/50 hover:shadow-emerald-900/80 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                                    <i class="fa-solid fa-file-arrow-up"></i> Submeter Trabalho
+                                </button>
+                                <button onclick="navigateTo('inscricoes')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3.5 rounded-xl border border-slate-700 transition flex items-center gap-2">
+                                    <i class="fa-solid fa-ticket"></i> Realizar Inscrição
+                                </button>
+                            </div>
+
+                            <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-800/80 text-center sm:text-left">
+                                <div>
+                                    <div class="text-2xl font-black text-emerald-400">300+</div>
+                                    <div class="text-xs text-slate-400">Participantes Esperados</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-black text-water-400">150+</div>
+                                    <div class="text-xs text-slate-400">Trabalhos Científicos</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-black text-gold-400">04 Dias</div>
+                                    <div class="text-xs text-slate-400">Imersão & Visitas Técnicas</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Destaque da Inscrição/Local -->
+                        <div class="lg:col-span-5">
+                            <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 shadow-2xl backdrop-blur-md space-y-4">
+                                <div class="flex justify-between items-center pb-3 border-b border-slate-700">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Informações Chave</span>
+                                    <span class="text-xs bg-emerald-950 text-emerald-300 border border-emerald-700 px-2.5 py-0.5 rounded-full font-semibold">Presencial</span>
+                                </div>
+                                <div class="space-y-3 text-sm">
+                                    <div class="flex items-start gap-3">
+                                        <i class="fa-solid fa-calendar-days text-emerald-400 mt-1"></i>
+                                        <div>
+                                            <div class="font-bold text-white">Data do Evento</div>
+                                            <div class="text-slate-300">18 a 21 de Novembro de 2026</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i class="fa-solid fa-location-dot text-emerald-400 mt-1"></i>
+                                        <div>
+                                            <div class="font-bold text-white">Cidade-Sede & Local</div>
+                                            <div class="text-slate-300">Centro de Convenções Universitário - Campus Central</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i class="fa-solid fa-clock-rotate-left text-emerald-400 mt-1"></i>
+                                        <div>
+                                            <div class="font-bold text-white">Prazo de Submissões</div>
+                                            <div class="text-amber-400 font-semibold">Até 30 de Setembro (23:59h)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pt-2">
+                                    <button onclick="navigateTo('programacao')" class="w-full bg-water-600/30 hover:bg-water-600/50 text-water-200 border border-water-500/30 py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-list-check"></i> Ver Programação Completa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção O que são Wetlands Construídos + Apresentação & Objetivos -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+                <!-- O que são Wetlands -->
+                <div class="grid md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-4">
+                        <div class="text-emerald-700 font-bold text-xs uppercase tracking-wider">Fundamentação Tecnológica</div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">O que são Wetlands Construídos?</h2>
+                        <p class="text-slate-6 font-normal text-slate-600 leading-relaxed">
+                            Wetlands Construídos (Sistemas Alagados Construídos) são sistemas projetados que utilizam processos naturais envolvendo vegetação aquática, solos/substratos e microbiologia associada para o tratamento de águas residuárias, efluentes industriais e drenagem urbana.
+                        </p>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Trata-se de uma Solução Baseada na Natureza (SbN) de baixo custo operacional, alta eficiência e forte apelo de sustentabilidade, sendo chave no novo marco do saneamento brasileiro.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl space-y-2">
+                            <i class="fa-solid fa-droplet text-2xl text-emerald-600"></i>
+                            <h3 class="font-bold text-slate-800 text-sm">Tratamento Eficiente</h3>
+                            <p class="text-xs text-slate-600">Remoção de matéria orgânica, nutrientes e microcontaminantes emergentes.</p>
+                        </div>
+                        <div class="bg-water-50 border border-water-200 p-5 rounded-2xl space-y-2">
+                            <i class="fa-solid fa-recycle text-2xl text-water-600"></i>
+                            <h3 class="font-bold text-slate-800 text-sm">Economia Circular</h3>
+                            <p class="text-xs text-slate-600">Reuso de água tratada e aproveitamento de biomassa vegetal gerada.</p>
+                        </div>
+                        <div class="bg-amber-50 border border-amber-200 p-5 rounded-2xl space-y-2 col-span-2">
+                            <i class="fa-solid fa-earth-americas text-2xl text-amber-600"></i>
+                            <h3 class="font-bold text-slate-800 text-sm">Resiliência & Biodiversidade</h3>
+                            <p class="text-xs text-slate-600">Desempenho robusto com integração paisagística e amortecimento de cheias urbanas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Apresentação e Objetivos do Simpósio -->
+                <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm space-y-6">
+                    <div class="border-b border-slate-100 pb-4">
+                        <h2 class="text-2xl font-bold text-slate-900">Apresentação e Objetivos da 8ª Edição</h2>
+                        <p class="text-sm text-slate-500">Promovendo o avanço da pesquisa e aplicação dos alagados construídos no Brasil</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-6 text-sm text-slate-600">
+                        <div class="space-y-2">
+                            <div class="font-bold text-slate-800 flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">1</span>
+                                Intercâmbio Científico
+                            </div>
+                            <p>Proporcionar um espaço de alta qualidade para disseminação de trabalhos inéditos, avanços metodológicos e tecnologias emergentes.</p>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="font-bold text-slate-800 flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">2</span>
+                                Conexão com o Setor
+                            </div>
+                            <p>Aproximar acadêmicos, companhias de saneamento estaduais/privadas e órgãos fiscalizadores ambientais para escala dos projetos.</p>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="font-bold text-slate-800 flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">3</span>
+                                Capacitação Prática
+                            </div>
+                            <p>Oferecer minicursos práticos de dimensionamento e visitas técnicas guiadas a plantas operacionais no último dia de evento.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patrocinadores e Apoiadores por Cotas -->
+                <div class="space-y-8">
+                    <div class="text-center max-w-xl mx-auto space-y-2">
+                        <h2 class="text-2xl font-bold text-slate-900">Patrocinadores e Apoiadores</h2>
+                        <p class="text-xs text-slate-500">Instituições e empresas que viabilizam o avanço da ciência do saneamento</p>
+                    </div>
+
+                    <!-- Cota Diamante -->
+                    <div class="space-y-3">
+                        <div class="text-center">
+                            <span class="bg-gradient-to-r from-slate-200 via-slate-100 to-slate-300 text-slate-800 font-bold text-xs px-4 py-1 rounded-full border border-slate-300 shadow-sm">
+                                <i class="fa-solid fa-gem text-cyan-600"></i> PATROCÍNIO DIAMANTE
+                            </span>
+                        </div>
+                        <div class="flex justify-center gap-6 flex-wrap">
+                            <div class="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm hover:shadow-md transition w-64 flex items-center justify-center text-slate-400 font-bold text-lg">
+                                <i class="fa-solid fa-water text-cyan-700 text-2xl mr-2"></i> HydroEco Brasil
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cota Ouro -->
+                    <div class="space-y-3">
+                        <div class="text-center">
+                            <span class="bg-amber-100 text-amber-800 font-bold text-xs px-4 py-1 rounded-full border border-amber-300">
+                                <i class="fa-solid fa-medal text-amber-600"></i> PATROCÍNIO OURO
+                            </span>
+                        </div>
+                        <div class="flex justify-center gap-6 flex-wrap">
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm w-48 flex items-center justify-center text-slate-500 font-semibold text-sm">
+                                EcoSaneamento S/A
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm w-48 flex items-center justify-center text-slate-500 font-semibold text-sm">
+                                BioFilter Tech
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cota Prata & Bronze & Apoio -->
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
+                        <div class="bg-slate-100 p-4 rounded-xl text-center space-y-2 border border-slate-200">
+                            <span class="text-xs font-bold text-slate-600 uppercase">Cota Prata</span>
+                            <div class="text-xs text-slate-500 font-medium">VerdeÁgua Engenharia • AmbienLab</div>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-xl text-center space-y-2 border border-slate-200">
+                            <span class="text-xs font-bold text-slate-600 uppercase">Cota Bronze</span>
+                            <div class="text-xs text-slate-500 font-medium">PlantaBio Soluções • AquaConsult</div>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-xl text-center space-y-2 border border-slate-200 sm:col-span-2 lg:col-span-1">
+                            <span class="text-xs font-bold text-slate-600 uppercase">Apoio Institucional</span>
+                            <div class="text-xs text-slate-500 font-medium">ABES • CNPq • CAPES • FAPESP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ORGANIZAÇÃO ==================== -->
+        <section id="sec-organizacao" class="view-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="border-b border-slate-200 pb-5">
+                    <h1 class="text-3xl font-extrabold text-slate-900">Comissão do Evento</h1>
+                    <p class="text-slate-500 text-sm">Corpo docente, pesquisadores e avaliadores ad hoc responsáveis pelo 8º SBWC</p>
+                </div>
+
+                <!-- Abas da Comissão -->
+                <div class="flex border-b border-slate-200 gap-4 overflow-x-auto">
+                    <button onclick="switchOrgTab('executiva')" id="tab-org-executiva" class="pb-3 text-sm font-bold border-b-2 border-emerald-600 text-emerald-700 whitespace-nowrap">
+                        Comissão Organizadora / Executiva
+                    </button>
+                    <button onclick="switchOrgTab('cientifica')" id="tab-org-cientifica" class="pb-3 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap">
+                        Comissão Científica
+                    </button>
+                    <button onclick="switchOrgTab('avaliadora')" id="tab-org-avaliadora" class="pb-3 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap">
+                        Comissão Avaliadora (Ad Hoc)
+                    </button>
+                </div>
+
+                <!-- Conteúdo Aba Executiva -->
+                <div id="org-executiva" class="org-content grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
+                            DR
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900">Prof. Dr. Ricardo Silva</h3>
+                            <p class="text-xs text-emerald-600 font-semibold">Coordenador Geral</p>
+                            <p class="text-xs text-slate-500 mt-1">Universidade Federal de Saneamento (UFS)</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
+                            MA
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900">Dra. Maria Antonia Costa</h3>
+                            <p class="text-xs text-emerald-600 font-semibold">Vice-Coordenadora</p>
+                            <p class="text-xs text-slate-500 mt-1">Instituto de Pesquisas Ambientais (IPA)</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
+                            CL
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-900">Eng. Carlos Lima</h3>
+                            <p class="text-xs text-emerald-600 font-semibold">Gestão Financeira e Infraestrutura</p>
+                            <p class="text-xs text-slate-500 mt-1">Associação Brasileira de Wetlands</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba Científica -->
+                <div id="org-cientifica" class="org-content hidden grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                        <span class="text-[10px] font-bold uppercase bg-water-100 text-water-800 px-2 py-0.5 rounded">Eixo 1</span>
+                        <h3 class="font-bold text-slate-900">Profª. Dra. Beatriz Ferreira</h3>
+                        <p class="text-xs text-slate-500">Líder do Eixo: Remoção de Microcontaminantes</p>
+                        <p class="text-xs font-medium text-slate-700">USP - Universidade de São Paulo</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                        <span class="text-[10px] font-bold uppercase bg-water-100 text-water-800 px-2 py-0.5 rounded">Eixo 2</span>
+                        <h3 class="font-bold text-slate-900">Prof. Dr. Fernando Gomez</h3>
+                        <p class="text-xs text-slate-500">Líder do Eixo: Tratamento de Lodo</p>
+                        <p class="text-xs font-medium text-slate-700">UFSC - Univ. Federal de Santa Catarina</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+                        <span class="text-[10px] font-bold uppercase bg-water-100 text-water-800 px-2 py-0.5 rounded">Eixo 3</span>
+                        <h3 class="font-bold text-slate-900">Dra. Juliana Mendes</h3>
+                        <p class="text-xs text-slate-500">Líder do Eixo: Otimização & Novas Concepções</p>
+                        <p class="text-xs font-medium text-slate-700">UNICAMP</p>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Aba Avaliadora -->
+                <div id="org-avaliadora" class="org-content hidden bg-white p-6 rounded-2xl border border-slate-200 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-base">Nominata de Pareceristas Credenciados</h3>
+                    <p class="text-xs text-slate-500">Relação de avaliadores cadastrados e aptos para revisão por pares blind-review:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-slate-700 font-medium">
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">Dr. Alexandre Rocha (UFMG)</div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">Dra. Camila Duarte (UFRGS)</div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">Dr. Eduardo Paiva (UNESP)</div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">Dra. Fernanda Luz (UFC)</div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">Dr. Gustavo Nogueira (UFPE)</div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">Dra. Helena Martins (UnB)</div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">Dr. Igor Alencar (UFPR)</div>
+                        <div class="p-2.5 bg-slate-50 rounded-lg border border-slate-200">Dra. Larissa Souza (UFRJ)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PROGRAMAÇÃO COMPLETA ==================== -->
+        <section id="sec-programacao" class="view-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="flex flex-wrap justify-between items-end gap-4 border-b border-slate-200 pb-5">
+                    <div>
+                        <h1 class="text-3xl font-extrabold text-slate-900">Programação Científica Interativa</h1>
+                        <p class="text-slate-500 text-sm">Grade completa de palestras, mesas redondas, minicursos e visitas técnicas</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="filterScheduleMyAgenda()" id="btn-filter-my-agenda" class="bg-amber-100 text-amber-800 border border-amber-300 font-semibold text-xs px-3 py-2 rounded-lg hover:bg-amber-200 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-star text-amber-500"></i> Ver Minha Agenda (<span id="count-my-agenda">0</span>)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Seleção dos Dias -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <button onclick="switchDaySchedule(1)" id="day-btn-1" class="day-tab-btn bg-emerald-600 text-white p-4 rounded-xl font-bold text-center shadow-md">
+                        <div class="text-xs uppercase tracking-wider opacity-80">Dia 01</div>
+                        <div class="text-sm">Quarta • 18/11</div>
+                    </button>
+                    <button onclick="switchDaySchedule(2)" id="day-btn-2" class="day-tab-btn bg-white text-slate-700 hover:bg-slate-100 p-4 rounded-xl font-bold text-center border border-slate-200">
+                        <div class="text-xs uppercase tracking-wider text-slate-400">Dia 02</div>
+                        <div class="text-sm">Quinta • 19/11</div>
+                    </button>
+                    <button onclick="switchDaySchedule(3)" id="day-btn-3" class="day-tab-btn bg-white text-slate-700 hover:bg-slate-100 p-4 rounded-xl font-bold text-center border border-slate-200">
+                        <div class="text-xs uppercase tracking-wider text-slate-400">Dia 03</div>
+                        <div class="text-sm">Sexta • 20/11</div>
+                    </button>
+                    <button onclick="switchDaySchedule(4)" id="day-btn-4" class="day-tab-btn bg-white text-slate-700 hover:bg-slate-100 p-4 rounded-xl font-bold text-center border border-slate-200">
+                        <div class="text-xs uppercase tracking-wider text-slate-400">Dia 04</div>
+                        <div class="text-sm">Sábado • 21/11</div>
+                    </button>
+                </div>
+
+                <!-- Lista de Atividades do Dia Selecionado -->
+                <div id="schedule-container" class="space-y-4">
+                    <!-- Gerado Dinamicamente via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== INSCRIÇÕES & SIMULADOR SYMPLA ==================== -->
+        <section id="sec-inscricoes" class="view-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                <div class="border-b border-slate-200 pb-5">
+                    <h1 class="text-3xl font-extrabold text-slate-900">Inscrições & Valores</h1>
+                    <p class="text-slate-500 text-sm">Confira os lotes, categorias de participação, minicursos adicionais e regras de reembolso</p>
+                </div>
+
+                <!-- Tabela de Preços -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-slate-900 text-white uppercase text-xs">
+                                <tr>
+                                    <th class="p-4">Categoria de Inscrição</th>
+                                    <th class="p-4">1º Lote (Até 30/08)</th>
+                                    <th class="p-4">2º Lote (Até 30/10)</th>
+                                    <th class="p-4">No Local / Evento</th>
+                                    <th class="p-4 text-center">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 font-medium">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-900">Estudante de Graduação</div>
+                                        <div class="text-xs text-slate-500">Exige comprovante de matrícula</div>
+                                    </td>
+                                    <td class="p-4 text-emerald-700 font-bold">R$ 180,00</td>
+                                    <td class="p-4">R$ 230,00</td>
+                                    <td class="p-4">R$ 280,00</td>
+                                    <td class="p-4 text-center">
+                                        <button onclick="simulateSymplaCheckout('Estudante Graduação', 180)" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition">Inscrever</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-900">Estudante de Pós-Graduação</div>
+                                        <div class="text-xs text-slate-500">Mestrando / Doutorando</div>
+                                    </td>
+                                    <td class="p-4 text-emerald-700 font-bold">R$ 250,00</td>
+                                    <td class="p-4">R$ 320,00</td>
+                                    <td class="p-4">R$ 380,00</td>
+                                    <td class="p-4 text-center">
+                                        <button onclick="simulateSymplaCheckout('Estudante Pós', 250)" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition">Inscrever</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-900">Profissional / Docente Sócio ABES</div>
+                                        <div class="text-xs text-slate-500">Desconto de associado adimplente</div>
+                                    </td>
+                                    <td class="p-4 text-emerald-700 font-bold">R$ 420,00</td>
+                                    <td class="p-4">R$ 500,00</td>
+                                    <td class="p-4">R$ 580,00</td>
+                                    <td class="p-4 text-center">
+                                        <button onclick="simulateSymplaCheckout('Profissional Sócio', 420)" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition">Inscrever</button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="p-4">
+                                        <div class="font-bold text-slate-900">Profissional / Docente Não-Sócio</div>
+                                        <div class="text-xs text-slate-500">Público geral</div>
+                                    </td>
+                                    <td class="p-4 text-emerald-700 font-bold">R$ 520,00</td>
+                                    <td class="p-4">R$ 620,00</td>
+                                    <td class="p-4">R$ 720,00</td>
+                                    <td class="p-4 text-center">
+                                        <button onclick="simulateSymplaCheckout('Profissional Não-Sócio', 520)" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition">Inscrever</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Adicionais: Minicursos e Visita Técnica -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 space-y-4 shadow-sm">
+                        <div class="flex items-center gap-3 text-water-700">
+                            <i class="fa-solid fa-laptop-code text-2xl"></i>
+                            <h3 class="font-bold text-lg text-slate-900">Minicursos Práticos Adicionais</h3>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Atividades hands-on realizadas no Dia 1 e Dia 4. Taxa única adicional de <strong>R$ 80,00</strong> por minicurso com emissão de certificado específico de 4h.
+                        </p>
+                        <ul class="text-xs text-slate-700 space-y-2 list-disc list-inside">
+                            <li>Minicurso A: Dimensionamento de Wetlands Flutuantes</li>
+                            <li>Minicurso B: Modelagem Numérica e Hidrodinâmica em Alagados</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 space-y-4 shadow-sm">
+                        <div class="flex items-center gap-3 text-emerald-700">
+                            <i class="fa-solid fa-bus text-2xl"></i>
+                            <h3 class="font-bold text-lg text-slate-900">Visita Técnica Guiada</h3>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Visita de campo de meio período à Estação de Tratamento com Wetlands em escala real no Dia 4. Inclui transporte fretado e kit de proteção. Taxa: <strong>R$ 60,00</strong>.
+                        </p>
+                        <span class="inline-block text-[11px] font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded">Vagas limitadas a 50 congressistas</span>
+                    </div>
+                </div>
+
+                <!-- Painel Informativo sobre Níveis de Integração Sympla -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-cloud-arrow-down text-emerald-400 text-xl"></i>
+                            <h3 class="font-bold text-base">Integração Técnica com a Plataforma Sympla</h3>
+                        </div>
+                        <span class="text-xs bg-emerald-950 text-emerald-400 px-3 py-1 rounded-full border border-emerald-800">Status: Sincronizado via API REST</span>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Conforme requisitos do Termo de Referência, esta plataforma integra 100% das etapas operacionais da Sympla:
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                        <div class="p-2 bg-slate-800 rounded border border-slate-700">
+                            <strong class="text-emerald-400 block">Nível 1 & 2</strong> API Direct link & REST Sync
+                        </div>
+                        <div class="p-2 bg-slate-800 rounded border border-slate-700">
+                            <strong class="text-emerald-400 block">Nível 3 & 4</strong> Status Financeiro e Isenções
+                        </div>
+                        <div class="p-2 bg-slate-800 rounded border border-slate-700">
+                            <strong class="text-emerald-400 block">Nível 5 & 6</strong> Vínculo Autor/Apresentador
+                        </div>
+                        <div class="p-2 bg-slate-800 rounded border border-slate-700">
+                            <strong class="text-emerald-400 block">Nível 7</strong> Direct Database para Certificados
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== NORMAS DE SUBMISSÃO ==================== -->
+        <section id="sec-normas" class="view-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                <div class="border-b border-slate-200 pb-5">
+                    <h1 class="text-3xl font-extrabold text-slate-900">Normas para Submissão de Trabalhos</h1>
+                    <p class="text-slate-500 text-sm">Diretrizes de formatação, eixos temáticos e arquivos para download</p>
+                </div>
+
+                <!-- Eixos Temáticos Principais -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-bold text-slate-900">Eixos Temáticos do 8º SBWC</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <span class="text-xs font-bold text-emerald-600">Eixo 01</span>
+                            <h3 class="font-bold text-slate-800 text-sm">Remoção de microcontaminantes em Wetlands Construídos</h3>
+                            <p class="text-xs text-slate-500">Fármacos, agrotóxicos, microplásticos e disruptores endócrinos.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <span class="text-xs font-bold text-emerald-600">Eixo 02</span>
+                            <h3 class="font-bold text-slate-800 text-sm">Tratamento de lodo em Wetlands Construídos</h3>
+                            <p class="text-xs text-slate-500">Leitos de secagem e mineralização biológica de lodos de ETE.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <span class="text-xs font-bold text-emerald-600">Eixo 03</span>
+                            <h3 class="font-bold text-slate-800 text-sm">Otimização e novas concepções de Wetlands</h3>
+                            <p class="text-xs text-slate-500">Sistemas aerados, aeróbios/anaeróbios combinados e bioeletroquímicos.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <span class="text-xs font-bold text-emerald-600">Eixo 04</span>
+                            <h3 class="font-bold text-slate-800 text-sm">Amortecimento de cheias e Drenagem Urbana</h3>
+                            <p class="text-xs text-slate-500">Wetlands alagáveis de detenção, retenção e qualidade do deflúvio.</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                            <span class="text-xs font-bold text-emerald-600">Eixo 05</span>
+                            <h3 class="font-bold text-slate-800 text-sm">Economia, aplicabilidade e novo marco de saneamento</h3>
+                            <p class="text-xs text-slate-500">Análise de ciclo de vida (ACV), viabilidade econômica e regulação.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regras do Edital & Downloads dos Templates -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 space-y-4 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-900">Resumo das Regras de Envio</h2>
+                        <ul class="text-xs text-slate-600 space-y-3 list-disc list-inside">
+                            <li><strong>Modalidades Aceitas:</strong> Resumo Expandido (4 páginas) ou Artigo Completo (até 8 páginas).</li>
+                            <li><strong>Formatos Aceitos:</strong> Arquivo obrigatoriamente em PDF sem a identificação de autores para o processo de avaliação blind-review.</li>
+                            <li><strong>Coautoria:</strong> Limite máximo de até 8 autores por artigo submetido.</li>
+                            <li><strong>Apresentação:</strong> É obrigatório que pelo menos um dos autores esteja com inscrição confirmada no evento até a data limite para constar nos Anais.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-200 space-y-4 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-emerald-900 text-base">Templates Oficiais</h3>
+                            <p class="text-xs text-emerald-700 mt-1">Baixe os modelos oficiais e formate seu artigo de acordo com o padrão do simpósio.</p>
+                        </div>
+                        <div class="space-y-2 pt-2">
+                            <button onclick="downloadMockTemplate('docx')" class="w-full bg-white hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2.5 px-3 rounded-lg border border-emerald-300 transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-file-word text-blue-600 text-base"></i> Download Template (.DOCX)
+                            </button>
+                            <button onclick="downloadMockTemplate('pptx')" class="w-full bg-white hover:bg-emerald-100 text-emerald-800 font-bold text-xs py-2.5 px-3 rounded-lg border border-emerald-300 transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-file-powerpoint text-amber-600 text-base"></i> Download Template Pôster (.PPTX)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ANAIS DO EVENTO ==================== -->
+        <section id="sec-anais" class="view-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="flex flex-wrap justify-between items-end gap-4 border-b border-slate-200 pb-5">
+                    <div>
+                        <h1 class="text-3xl font-extrabold text-slate-900">Anais Eletrônicos dos Trabalhos</h1>
+                        <p class="text-slate-500 text-sm">Repositório público de trabalhos aprovados e publicados com registro ISBN e DOI</p>
+                    </div>
+                    <div>
+                        <button onclick="downloadFullProceedings()" class="bg-water-700 hover:bg-water-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
+                            <i class="fa-solid fa-book-bookmark"></i> Download Volume Completo (PDF)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Barra de Pesquisa dos Anais -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm grid md:grid-cols-12 gap-3">
+                    <div class="md:col-span-6 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="anais-search-input" onkeyup="filterProceedings()" placeholder="Buscar por título, nome do autor ou palavra-chave..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div class="md:col-span-4">
+                        <select id="anais-eixo-filter" onchange="filterProceedings()" class="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="ALL">Todos os Eixos Temáticos</option>
+                            <option value="Eixo 01">Eixo 01: Microcontaminantes</option>
+                            <option value="Eixo 02">Eixo 02: Tratamento de Lodo</option>
+                            <option value="Eixo 03">Eixo 03: Novas Concepções</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <button onclick="resetProceedingsFilter()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs py-2 rounded-xl transition">
+                            Limpar Filtros
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lista de Artigos dos Anais -->
+                <div id="anais-list-container" class="space-y-4">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== GUIA DA CIDADE / INFORMAÇÕES ÚTEIS ==================== -->
+        <section id="sec-guia" class="view-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+                <div class="border-b border-slate-200 pb-5">
+                    <h1 class="text-3xl font-extrabold text-slate-900">Guia Prático da Cidade-Sede</h1>
+                    <p class="text-slate-500 text-sm">Hospedagem conveniada, rotas de transporte, restaurantes e turismo local</p>
+                </div>
+
+                <!-- Menu de Abas do Guia -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <button onclick="switchGuiaTab('hospedagem')" id="guia-tab-hospedagem" class="guia-btn bg-emerald-600 text-white p-4 rounded-xl font-bold text-center shadow-md">
+                        <i class="fa-solid fa-hotel text-xl block mb-1"></i> Hospedagem
+                    </button>
+                    <button onclick="switchGuiaTab('transporte')" id="guia-tab-transporte" class="guia-btn bg-white text-slate-700 p-4 rounded-xl font-bold text-center border border-slate-200 hover:bg-slate-50">
+                        <i class="fa-solid fa-plane-arrival text-xl block mb-1"></i> Transporte
+                    </button>
+                    <button onclick="switchGuiaTab('alimentacao')" id="guia-tab-alimentacao" class="guia-btn bg-white text-slate-700 p-4 rounded-xl font-bold text-center border border-slate-200 hover:bg-slate-50">
+                        <i class="fa-solid fa-utensils text-xl block mb-1"></i> Alimentação
+                    </button>
+                    <button onclick="switchGuiaTab('turismo')" id="guia-tab-turismo" class="guia-btn bg-white text-slate-700 p-4 rounded-xl font-bold text-center border border-slate-200 hover:bg-slate-50">
+                        <i class="fa-solid fa-map-location-dot text-xl block mb-1"></i> Turismo
+                    </button>
+                </div>
+
+                <!-- Conteúdo Hospedagem -->
+                <div id="guia-content-hospedagem" class="guia-content grid md:grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
+                        <span class="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Tarifa Especial SBWC</span>
+                        <h3 class="font-bold text-slate-900">Hotel Plaza Central</h3>
+                        <p class="text-xs text-slate-500">A 400m do Centro de Convenções do Evento.</p>
+                        <div class="text-xs font-semibold text-emerald-700">Cupom: SBWC2026 (-15%)</div>
+                        <div class="text-xs text-slate-600"><i class="fa-solid fa-phone mr-1"></i> (11) 3344-5566</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-3 shadow-sm">
+                        <span class="text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Tarifa Especial SBWC</span>
+                        <h3 class="font-bold text-slate-900">Grand Park Hotel</h3>
+                        <p class="text-xs text-slate-500">Próximo à área gastronômica e parque ecológico.</p>
+                        <div class="text-xs font-semibold text-emerald-700">Cupom: SBWC2026 (-10%)</div>
+                        <div class="text-xs text-slate-600"><i class="fa-solid fa-phone mr-1"></i> (11) 3344-8899</div>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Transporte -->
+                <div id="guia-content-transporte" class="guia-content hidden bg-white p-6 rounded-2xl border border-slate-200 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-lg">Como Chegar ao Evento</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-xs text-slate-600">
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                            <strong class="text-slate-800 block text-sm"><i class="fa-solid fa-plane text-water-600 mr-2"></i>Do Aeroporto Internacional</strong>
+                            <p>Distância de 22 km. Serviço de táxi credenciado no desembarque ou aplicativos de transporte (tempo médio: 35 min).</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                            <strong class="text-slate-800 block text-sm"><i class="fa-solid fa-bus text-emerald-600 mr-2"></i>Da Rodoviária Central</strong>
+                            <p>Linhas diretas de ônibus urbano (Linha 102 - Universitária) desembarcando em frente ao Portão Principal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Alimentação -->
+                <div id="guia-content-alimentacao" class="guia-content hidden grid md:grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-2 shadow-sm">
+                        <h3 class="font-bold text-slate-900">Restaurante Sabor & Raízes</h3>
+                        <p class="text-xs text-slate-500">Culinária regional e buffet a quilo de qualidade.</p>
+                        <p class="text-xs font-semibold text-emerald-600">Distância: 200m</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-2 shadow-sm">
+                        <h3 class="font-bold text-slate-900">Café do Parque</h3>
+                        <p class="text-xs text-slate-500">Lanches rápidos, sucos naturais e cafés especiais.</p>
+                        <p class="text-xs font-semibold text-emerald-600">Distância: No próprio campus</p>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Turismo -->
+                <div id="guia-content-turismo" class="guia-content hidden bg-white p-6 rounded-2xl border border-slate-200 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-lg">Atrativos Ecológicos e Culturais</h3>
+                    <p class="text-xs text-slate-600">Aproveite sua estada para conhecer o Parque Ecológico Municipal de Wetlands e o Centro Histórico da cidade.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VALIDADOR DE CERTIFICADOS PUBLICO ==================== -->
+        <section id="sec-validar-certificado" class="view-section hidden py-12">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="text-center space-y-2">
+                    <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto text-2xl">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h1 class="text-3xl font-extrabold text-slate-900">Validação Pública de Certificados</h1>
+                    <p class="text-slate-500 text-sm">Digite o Código Hash de Autenticidade para verificar a veracidade do documento</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-md space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2 uppercase">Código Hash de Autenticidade (Ex: SBWC-2026-X89A)</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="input-hash-validation" placeholder="Cole aqui o hash impresso no certificado..." class="flex-grow px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <button onclick="validateHashCertificate()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl transition flex items-center gap-2">
+                                <i class="fa-solid fa-check"></i> Validar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="validation-result" class="hidden p-4 rounded-xl border">
+                        <!-- Resultado dinâmico -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 text-xs py-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-3">
+                <div class="flex items-center gap-2 text-white font-bold text-base">
+                    <i class="fa-solid fa-leaf text-emerald-400"></i> 8º SBWC 2026
+                </div>
+                <p class="leading-relaxed">
+                    Plataforma Oficial de Gestão Integrada do 8º Simpósio Brasileiro sobre Wetlands Construídos.
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-3 uppercase tracking-wider text-[11px]">Links Rápidos</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="navigateTo('home'); return false;" class="hover:text-emerald-400">Home</a></li>
+                    <li><a href="#" onclick="navigateTo('programacao'); return false;" class="hover:text-emerald-400">Programação</a></li>
+                    <li><a href="#" onclick="navigateTo('inscricoes'); return false;" class="hover:text-emerald-400">Inscrições Sympla</a></li>
+                    <li><a href="#" onclick="navigateTo('normas'); return false;" class="hover:text-emerald-400">Normas de Submissão</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-3 uppercase tracking-wider text-[11px]">Áreas Restritas</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" onclick="openPortalModal('congressista'); return false;" class="hover:text-emerald-400"><i class="fa-solid fa-user-graduate mr-1"></i> Área do Congressista</a></li>
+                    <li><a href="#" onclick="openPortalModal('avaliador'); return false;" class="hover:text-emerald-400"><i class="fa-solid fa-microscope mr-1"></i> Área do Avaliador</a></li>
+                    <li><a href="#" onclick="openPortalModal('cms'); return false;" class="hover:text-emerald-400"><i class="fa-solid fa-gear mr-1"></i> CMS / Admin</a></li>
+                </ul>
+            </div>
+            <div class="space-y-2">
+                <h4 class="font-bold text-white mb-3 uppercase tracking-wider text-[11px]">Contato & Suporte</h4>
+                <p><i class="fa-solid fa-envelope mr-1 text-emerald-400"></i> contato@sbwc2026.com.br</p>
+                <p><i class="fa-brands fa-whatsapp mr-1 text-emerald-400"></i> (11) 98888-7766</p>
+                <p class="pt-2 text-[10px] text-slate-500">Conforme LGPD - Comissão Organizadora é Controladora dos Dados.</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-slate-900 text-center text-slate-600">
+            &copy; 2026 8º Simpósio Brasileiro sobre Wetlands Construídos. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL DE ACESSO / PORTAIS RESTRITOS ==================== -->
+    <div id="portal-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl border border-slate-200">
+            <!-- Modal Header -->
+            <div class="p-6 bg-slate-900 text-white flex justify-between items-center sticky top-0 z-10">
+                <div class="flex items-center gap-3">
+                    <div id="modal-portal-icon" class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h2 id="modal-portal-title" class="text-lg font-bold">Área Restrita do Congressista</h2>
+                        <p id="modal-portal-subtitle" class="text-xs text-slate-400">Gestão de submissões, pareceres e certificados</p>
+                    </div>
+                </div>
+                <button onclick="closePortalModal()" class="text-slate-400 hover:text-white text-xl p-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div class="p-6">
+
+                <!-- 1. PAINEL DO CONGRESSISTA -->
+                <div id="view-congressista-panel" class="portal-view hidden space-y-6">
+                    <!-- Status Financeiro & Dados -->
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <div class="text-xs text-slate-500 font-bold uppercase">Status da Inscrição</div>
+                            <div class="text-emerald-600 font-bold text-sm flex items-center gap-1.5 mt-1">
+                                <i class="fa-solid fa-circle-check"></i> Confirmada (Sympla)
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <div class="text-xs text-slate-500 font-bold uppercase">Categoria Cadastrada</div>
+                            <div class="text-slate-800 font-bold text-sm mt-1">Estudante de Pós-Graduação</div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <div class="text-xs text-slate-500 font-bold uppercase">Trabalhos Submetidos</div>
+                            <div class="text-slate-800 font-bold text-sm mt-1"><span id="user-submissoes-count">1</span> Artigo(s)</div>
+                        </div>
+                    </div>
+
+                    <!-- Minhas Submissões & Fluxo de Ressubmissão -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-slate-900 text-base">Meus Trabalhos Científicos</h3>
+                            <button onclick="toggleSubmissaoForm()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i> Nova Submissão
+                            </button>
+                        </div>
+
+                        <!-- Form de Submissão -->
+                        <div id="submissao-form-container" class="hidden bg-emerald-50/50 p-5 rounded-2xl border border-emerald-200 space-y-4">
+                            <h4 class="font-bold text-slate-800 text-sm">Formulário de Submissão de Artigo</h4>
+                            <div class="grid md:grid-cols-2 gap-4 text-xs">
+                                <div class="md:col-span-2">
+                                    <label class="block font-semibold mb-1 text-slate-700">Título do Trabalho *</label>
+                                    <input type="text" id="sub-titulo" placeholder="Ex: Avaliação de Wetlands Verticais no Tratamento de Efluentes..." class="w-full p-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+                                </div>
+                                <div>
+                                    <label class="block font-semibold mb-1 text-slate-700">Eixo Temático *</label>
+                                    <select id="sub-eixo" class="w-full p-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+                                        <option value="Eixo 01">Eixo 01: Microcontaminantes</option>
+                                        <option value="Eixo 02">Eixo 02: Tratamento de Lodo</option>
+                                        <option value="Eixo 03">Eixo 03: Novas Concepções</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block font-semibold mb-1 text-slate-700">Modalidade Pretendida *</label>
+                                    <select id="sub-modalidade" class="w-full p-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+                                        <option value="Apresentação Oral">Apresentação Oral</option>
+                                        <option value="Pôster / Painel">Pôster / Painel</option>
+                                    </select>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block font-semibold mb-1 text-slate-700">Coautores & Filiação Institucional</label>
+                                    <input type="text" id="sub-coautores" placeholder="Ex: Maria Silva (UFS), João Souza (USP)" class="w-full p-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block font-semibold mb-1 text-slate-700">Arquivo do Trabalho (PDF sem identificação) *</label>
+                                    <input type="file" id="sub-file" accept=".pdf" class="w-full p-2 bg-white border border-slate-300 rounded-lg text-slate-600">
+                                </div>
+                            </div>
+                            <div class="flex justify-end gap-2 pt-2">
+                                <button onclick="toggleSubmissaoForm()" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-xs font-semibold">Cancelar</button>
+                                <button onclick="submitNewPaper()" class="bg-emerald-600 text-white px-5 py-2 rounded-lg text-xs font-bold hover:bg-emerald-500 transition">Enviar Submissão</button>
+                            </div>
+                        </div>
+
+                        <!-- Lista de trabalhos do usuário -->
+                        <div id="user-papers-list" class="space-y-3">
+                            <!-- Inserido dinamicamente via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Gerador de Certificados Digitais do Congressista -->
+                    <div class="border-t border-slate-200 pt-5 space-y-3">
+                        <h3 class="font-bold text-slate-900 text-base">Meus Certificados Emitting Hub</h3>
+                        <p class="text-xs text-slate-500">Certificados liberados para download em PDF com QR Code e Hash de Validação:</p>
+                        <div class="grid sm:grid-cols-2 gap-3">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex justify-between items-center">
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs">Participação Geral (28h)</div>
+                                    <div class="text-[10px] text-slate-500">Emitido em 21/11/2026</div>
+                                </div>
+                                <button onclick="generateUserCertificate('Participação Geral no 8º SBWC', '28 horas')" class="bg-water-700 hover:bg-water-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                                    <i class="fa-solid fa-file-pdf mr-1"></i> PDF
+                                </button>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex justify-between items-center">
+                                <div>
+                                    <div class="font-bold text-slate-800 text-xs">Apresentação de Trabalho Oral</div>
+                                    <div class="text-[10px] text-slate-500">Artigo ID #102</div>
+                                </div>
+                                <button onclick="generateUserCertificate('Apresentação de Trabalho Oral - Artigo #102', '12 horas')" class="bg-water-700 hover:bg-water-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">
+                                    <i class="fa-solid fa-file-pdf mr-1"></i> PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. PAINEL DO AVALIADOR (PARECERISTA) -->
+                <div id="view-avaliador-panel" class="portal-view hidden space-y-6">
+                    <div class="bg-water-50 border border-water-200 p-4 rounded-xl flex items-center justify-between text-xs">
+                        <div>
+                            <strong class="text-water-900 block text-sm">Painel de Avaliação Cega (Double-Blind)</strong>
+                            <span class="text-water-700">Parecerista Credenciado: <strong>Dr. Alexandre Rocha</strong></span>
+                        </div>
+                        <span class="bg-water-200 text-water-800 font-bold px-3 py-1 rounded-full">02 Trabalhos Atribuídos</span>
+                    </div>
+
+                    <!-- Lista de Artigos para Avaliar -->
+                    <div id="evaluator-papers-list" class="space-y-4">
+                        <!-- Preenchido via JS -->
+                    </div>
+                </div>
+
+                <!-- 3. PAINEL ADMINISTRATIVO CMS -->
+                <div id="view-cms-panel" class="portal-view hidden space-y-6">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
+                        <h3 class="font-bold text-slate-900 text-lg">Dashboard de Volumetria & Gestão Geral</h3>
+                        <span class="bg-purple-100 text-purple-800 font-bold text-xs px-3 py-1 rounded-full">Permissão: Administrador Geral</span>
+                    </div>
+
+                    <!-- Cards Estatísticos de Volumetria conforme RFP -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl">
+                            <div class="text-xs text-emerald-700 font-bold">Inscritos Pagos</div>
+                            <div class="text-2xl font-black text-emerald-900 mt-1">214 <span class="text-xs font-normal text-slate-500">/ 300</span></div>
+                        </div>
+                        <div class="bg-water-50 border border-water-200 p-4 rounded-xl">
+                            <div class="text-xs text-water-700 font-bold">Submissões Recebidas</div>
+                            <div class="text-2xl font-black text-water-900 mt-1">142 <span class="text-xs font-normal text-slate-500">/ 300</span></div>
+                        </div>
+                        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
+                            <div class="text-xs text-amber-700 font-bold">Avaliadores Ativos</div>
+                            <div class="text-2xl font-black text-amber-900 mt-1">38 <span class="text-xs font-normal text-slate-500">/ 50</span></div>
+                        </div>
+                        <div class="bg-slate-100 border border-slate-200 p-4 rounded-xl">
+                            <div class="text-xs text-slate-700 font-bold">Certificados Gerados</div>
+                            <div class="text-2xl font-black text-slate-900 mt-1">530+</div>
+                        </div>
+                    </div>
+
+                    <!-- Módulo de E-mails Transacionais da RFP -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center justify-between">
+                            <span><i class="fa-solid fa-paper-plane text-emerald-600 mr-2"></i> Disparo de E-mails Transacionais (SMTP Amazon SES)</span>
+                            <span class="text-xs text-emerald-600 font-normal">SLA Entregabilidade 99.8%</span>
+                        </h4>
+                        <div class="grid md:grid-cols-2 gap-2 text-xs">
+                            <button onclick="triggerMockEmail('Confirmação de Inscrição')" class="bg-white p-2.5 rounded-lg border border-slate-200 text-left hover:border-emerald-500 font-medium">
+                                ✉ Trigger: Confirmar Inscrição & Welcome
+                            </button>
+                            <button onclick="triggerMockEmail('Lembrete aos Avaliadores')" class="bg-white p-2.5 rounded-lg border border-slate-200 text-left hover:border-emerald-500 font-medium">
+                                ✉ Trigger: Notificar Avaliadores (Prazo Próximo)
+                            </button>
+                            <button onclick="triggerMockEmail('Resultado da Avaliação')" class="bg-white p-2.5 rounded-lg border border-slate-200 text-left hover:border-emerald-500 font-medium">
+                                ✉ Trigger: Divulgar Parecer do Artigo (Aprovado)
+                            </button>
+                            <button onclick="triggerMockEmail('Aviso de Certificados Disponíveis')" class="bg-white p-2.5 rounded-lg border border-slate-200 text-left hover:border-emerald-500 font-medium">
+                                ✉ Trigger: Notificar Liberação de Certificados
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE VISUALIZAÇÃO / GERADOR DE CERTIFICADO PDF -->
+    <div id="certificate-modal" class="fixed inset-0 z-50 bg-slate-900/90 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full p-8 space-y-6 shadow-2xl relative border-8 border-emerald-800">
+            <button onclick="closeCertificateModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-2xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Moldura Oficial do Certificado -->
+            <div class="text-center space-y-4 py-4">
+                <div class="flex justify-center items-center gap-2 text-emerald-800 font-extrabold text-xl">
+                    <i class="fa-solid fa-leaf text-2xl"></i> 8º SIMPÓSIO BRASILEIRO SOBRE WETLANDS CONSTRUÍDOS
+                </div>
+                <div class="text-xs uppercase tracking-widest text-slate-500 font-bold">Certificado de Autenticidade Acadêmica</div>
+
+                <div class="py-6 text-slate-800 text-sm leading-relaxed max-w-xl mx-auto">
+                    Certificamos que <strong id="cert-user-name" class="text-slate-900 text-base underline">Dr. Participante Exemplo</strong> participou ativamente da atividade <strong id="cert-type-title">Participação Geral no Evento</strong> com carga horária total de <strong id="cert-hours">28 horas</strong>, realizada entre 18 e 21 de Novembro de 2026.
+                </div>
+
+                <!-- Footer do Certificado com QR Code e Hash -->
+                <div class="pt-6 border-t border-slate-200 flex justify-between items-center max-w-lg mx-auto">
+                    <div class="text-left text-[10px] text-slate-500 space-y-1">
+                        <div><strong>Código Hash:</strong> <span id="cert-hash-display" class="font-mono text-emerald-800">SBWC-2026-X89A</span></div>
+                        <div><strong>Data de Emissão:</strong> 21/11/2026</div>
+                        <div><strong>Validação:</strong> sbwc2026.com.br/validar</div>
+                    </div>
+                    <div id="cert-qrcode" class="w-20 h-20 bg-slate-100 p-1 border rounded"></div>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-3 pt-2">
+                <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-print"></i> Imprimir / Salvar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JAVASCRIPT DA APLICAÇÃO (SINGLE PAGE SPA LOGIC) -->
+    <script>
+        // ESTADO GLOBAL DA APLICAÇÃO (LOCALSTORAGE)
+        const STATE = {
+            myAgenda: JSON.parse(localStorage.getItem('sbwc_my_agenda')) || [],
+            userPapers: JSON.parse(localStorage.getItem('sbwc_user_papers')) || [
+                {
+                    id: 102,
+                    titulo: "Remoção de microcontaminantes farmacêuticos em wetlands horizontais",
+                    eixo: "Eixo 01",
+                    modalidade: "Apresentação Oral",
+                    coautores: "Beatriz Costa (USP), Ricardo Silva (UFS)",
+                    status: "Aprovado com Correções",
+                    versao: "V1",
+                    parecer: "Artigo de excelente relevância. Ajustar a discussão da Figura 3 referente aos fármacos remanescentes."
+                }
+            ],
+            evaluatorPapers: [
+                {
+                    id: 204,
+                    titulo: "Análise de ciclo de vida de leitos de secagem de lodo vegetalizados",
+                    eixo: "Eixo 02",
+                    status: "Pendente de Parecer"
+                },
+                {
+                    id: 205,
+                    titulo: "Desempenho hidrodinâmico de wetlands aerados artificialmente",
+                    eixo: "Eixo 03",
+                    status: "Concluído"
+                }
+            ],
+            proceedings: [
+                {
+                    id: 1,
+                    titulo: "Remoção de Ibuprofeno e Paracetamol em Wetlands Flutuantes de Fluxo Contínuo",
+                    autores: "Silva, R. A.; Almeida, M. C.; Gomez, F.",
+                    eixo: "Eixo 01",
+                    doi: "10.1016/j.sbwc.2026.01.001"
+                },
+                {
+                    id: 2,
+                    titulo: "Tratamento de Lodo de ETE por Alagados Construídos: Estudo de Caso de 5 Anos",
+                    autores: "Ferreira, B. L.; Costa, T. H.",
+                    eixo: "Eixo 02",
+                    doi: "10.1016/j.sbwc.2026.01.002"
+                },
+                {
+                    id: 3,
+                    titulo: "Modelagem Hidrodinâmica 3D em Wetlands de Fluxo Subsuperficial Vertical",
+                    autores: "Mendes, J. S.; Nogueira, G. P.",
+                    eixo: "Eixo 03",
+                    doi: "10.1016/j.sbwc.2026.01.003"
+                }
+            ]
+        };
+
+        // SCHEDULE DATA DE 4 DIAS
+        const SCHEDULE_DATA = {
+            1: [
+                { id: 'act-1', hora: '08:00 - 09:30', titulo: 'Credenciamento e Entrega de Kits', local: 'Foyer Principal', palestrante: 'Comissão Organizadora', tipo: 'Geral' },
+                { id: 'act-2', hora: '10:00 - 12:00', titulo: 'Cerimônia de Abertura & Conferência Magna de Abertura', local: 'Auditório Master', palestrante: 'Prof. Dr. Jan Vymazal (Convidado Internacional)', lattes: 'http://lattes.cnpq.br/', tipo: 'Palestra' },
+                { id: 'act-3', hora: '14:00 - 18:00', titulo: 'Minicurso A: Dimensionamento Prático de Wetlands Flutuantes', local: 'Sala 102', palestrante: 'Dra. Beatriz Ferreira', lattes: 'http://lattes.cnpq.br/', tipo: 'Minicurso' }
+            ],
+            2: [
+                { id: 'act-4', hora: '08:30 - 10:30', titulo: 'Mesa Redonda: Remoção de Microcontaminantes Emergentes', local: 'Auditório A', palestrante: 'Profª. Dra. Beatriz Ferreira & Painelistas', lattes: 'http://lattes.cnpq.br/', tipo: 'Mesa Redonda' },
+                { id: 'act-5', hora: '11:00 - 12:30', titulo: 'Sessão Oral 01: Eixo Tratamento de Lodos', local: 'Sala 101', palestrante: 'Apresentadores Trabalhos #101 a #108', tipo: 'Sessão Científica' }
+            ],
+            3: [
+                { id: 'act-6', hora: '09:00 - 11:30', titulo: 'Painel: Novo Marco do Saneamento e Soluções Baseadas na Natureza', local: 'Auditório Master', palestrante: 'Representantes Ministério das Cidades e ABES', tipo: 'Mesa Redonda' },
+                { id: 'act-7', hora: '14:00 - 16:00', titulo: 'Sessão de Pôsteres & Coffee Break Interativo', local: 'Hall de Exposições', palestrante: 'Diversos Autores', tipo: 'Pôster' }
+            ],
+            4: [
+                { id: 'act-8', hora: '08:00 - 13:00', titulo: 'Visita Técnica Guiada à Planta Operacional de Wetlands', local: 'Saída Foyer (Ônibus Fretado)', palestrante: 'Equipe Engenharia Operacional', tipo: 'Visita Técnica' },
+                { id: 'act-9', hora: '15:00 - 17:00', titulo: 'Cerimônia de Premiação de Artigos & Encerramento', local: 'Auditório Master', palestrante: 'Comissão Científica', tipo: 'Encerramento' }
+            ]
+        };
+
+        // INICIALIZAÇÃO AO CARREGAR
+        window.onload = function() {
+            startCountdown();
+            renderSchedule(1);
+            renderUserPapers();
+            renderEvaluatorPapers();
+            renderProceedingsList();
+            updateAgendaCounter();
+        };
+
+        // CONTAGEM REGRESSIVA
+        function startCountdown() {
+            const eventDate = new Date('2026-11-18T09:00:00').getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = eventDate - now;
+
+                if (diff < 0) {
+                    document.getElementById('countdown').innerText = "Evento em andamento!";
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById('countdown').innerText = `${days}d ${hours}h ${mins}m`;
+            }, 1000);
+        }
+
+        // NAVEGAÇÃO ENTRE SEÇÕES (SPA Router Simulado)
+        function navigateTo(sectionId) {
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            const targetSec = document.getElementById(`sec-${sectionId}`);
+            if (targetSec) targetSec.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('text-emerald-400'));
+            const activeNav = document.getElementById(`nav-${sectionId}`);
+            if (activeNav) activeNav.classList.add('text-emerald-400');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // PROGRAMAÇÃO INTERATIVA & FAVORITOS
+        function renderSchedule(day, onlyFavorites = false) {
+            const container = document.getElementById('schedule-container');
+            container.innerHTML = '';
+
+            let list = SCHEDULE_DATA[day] || [];
+            if (onlyFavorites) {
+                list = list.filter(item => STATE.myAgenda.includes(item.id));
+            }
+
+            if (list.length === 0) {
+                container.innerHTML = `<div class="p-8 text-center bg-white rounded-2xl text-slate-500 text-xs border border-slate-200">Nenhuma atividade encontrada nesta visualização.</div>`;
+                return;
+            }
+
+            list.forEach(item => {
+                const isFav = STATE.myAgenda.includes(item.id);
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-emerald-500 transition";
+                card.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-emerald-100 text-emerald-800 font-bold text-[10px] px-2.5 py-0.5 rounded-full">${item.tipo}</span>
+                            <span class="text-xs font-bold text-slate-500"><i class="fa-regular fa-clock mr-1"></i>${item.hora}</span>
+                            <span class="text-xs text-slate-400">• <i class="fa-solid fa-location-dot mr-1"></i>${item.local}</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">${item.titulo}</h3>
+                        <div class="text-xs text-slate-600">
+                            <strong>Palestrante/Responsável:</strong> ${item.palestrante}
+                            ${item.lattes ? `<a href="${item.lattes}" target="_blank" class="text-water-600 underline ml-2 font-semibold">[Currículo Lattes]</a>` : ''}
+                        </div>
+                    </div>
+                    <div>
+                        <button onclick="toggleFavoriteAgenda('${item.id}')" class="px-3.5 py-2 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 ${isFav ? 'bg-amber-100 border-amber-300 text-amber-800' : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'}">
+                            <i class="fa-solid fa-star ${isFav ? 'text-amber-500' : 'text-slate-400'}"></i>
+                            ${isFav ? 'Favoritado' : 'Favoritar'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function switchDaySchedule(day) {
+            document.querySelectorAll('.day-tab-btn').forEach(btn => {
+                btn.className = "day-tab-btn bg-white text-slate-700 hover:bg-slate-100 p-4 rounded-xl font-bold text-center border border-slate-200";
+            });
+            const activeBtn = document.getElementById(`day-btn-${day}`);
+            if (activeBtn) activeBtn.className = "day-tab-btn bg-emerald-600 text-white p-4 rounded-xl font-bold text-center shadow-md";
+            renderSchedule(day);
+        }
+
+        function toggleFavoriteAgenda(id) {
+            if (STATE.myAgenda.includes(id)) {
+                STATE.myAgenda = STATE.myAgenda.filter(i => i !== id);
+            } else {
+                STATE.myAgenda.push(id);
+            }
+            localStorage.setItem('sbwc_my_agenda', JSON.stringify(STATE.myAgenda));
+            updateAgendaCounter();
+            renderSchedule(1);
+        }
+
+        function updateAgendaCounter() {
+            document.getElementById('count-my-agenda').innerText = STATE.myAgenda.length;
+        }
+
+        function filterScheduleMyAgenda() {
+            renderSchedule(1, true);
+        }
+
+        // SIMULADOR SYMPLA CHECKOUT
+        function simulateSymplaCheckout(categoria, valor) {
+            alert(`[Simulador Sympla API - Nível 2 REST Sync]\n\nRedirecionando para inscrição de: ${categoria}\nValor: R$ ${valor},00\n\nEm ambiente de produção, este botão aciona o formulário checkout embarcado do Sympla com vinculação de autor.`);
+        }
+
+        // ORGANIZAÇÃO SWAP TABS
+        function switchOrgTab(tabName) {
+            document.querySelectorAll('.org-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(`org-${tabName}`).classList.remove('hidden');
+
+            document.querySelectorAll('#sec-organizacao button').forEach(b => {
+                b.className = "pb-3 text-sm font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap";
+            });
+            document.getElementById(`tab-org-${tabName}`).className = "pb-3 text-sm font-bold border-b-2 border-emerald-600 text-emerald-700 whitespace-nowrap";
+        }
+
+        // GUIA DA CIDADE SWAP TABS
+        function switchGuiaTab(tab) {
+            document.querySelectorAll('.guia-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(`guia-content-${tab}`).classList.remove('hidden');
+
+            document.querySelectorAll('.guia-btn').forEach(b => {
+                b.className = "guia-btn bg-white text-slate-700 p-4 rounded-xl font-bold text-center border border-slate-200 hover:bg-slate-50";
+            });
+            document.getElementById(`guia-tab-${tab}`).className = "guia-btn bg-emerald-600 text-white p-4 rounded-xl font-bold text-center shadow-md";
+        }
+
+        // ANAIS & BUSCA DE ARTIGOS
+        function renderProceedingsList(items = STATE.proceedings) {
+            const container = document.getElementById('anais-list-container');
+            container.innerHTML = '';
+
+            items.forEach(art => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 hover:border-water-500 transition";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="bg-water-100 text-water-800 font-bold px-2.5 py-0.5 rounded-full">${art.eixo}</span>
+                        <span class="text-slate-400 font-mono">DOI: ${art.doi}</span>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base">${art.titulo}</h3>
+                    <p class="text-xs text-slate-600 font-medium">Autores: ${art.autores}</p>
+                    <div class="pt-2 flex justify-end">
+                        <button onclick="downloadPaperPDF('${art.titulo}')" class="bg-water-700 hover:bg-water-600 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-pdf"></i> Download PDF Oficial
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterProceedings() {
+            const query = document.getElementById('anais-search-input').value.toLowerCase();
+            const eixo = document.getElementById('anais-eixo-filter').value;
+
+            const filtered = STATE.proceedings.filter(item => {
+                const matchesQuery = item.titulo.toLowerCase().includes(query) || item.autores.toLowerCase().includes(query);
+                const matchesEixo = eixo === 'ALL' || item.eixo === eixo;
+                return matchesQuery && matchesEixo;
+            });
+
+            renderProceedingsList(filtered);
+        }
+
+        function resetProceedingsFilter() {
+            document.getElementById('anais-search-input').value = '';
+            document.getElementById('anais-eixo-filter').value = 'ALL';
+            renderProceedingsList();
+        }
+
+        function downloadPaperPDF(title) {
+            alert(`Iniciando download em PDF do artigo:\n"${title}"\n\nArquivo gerado com cabeçalho oficial dos Anais do 8º SBWC.`);
+        }
+
+        function downloadFullProceedings() {
+            alert("Gerando arquivo PDF único e indexado do Volume Completo dos Anais do 8º SBWC (Volume ISBN 978-65-00-12345-0)...");
+        }
+
+        function downloadMockTemplate(type) {
+            alert(`Iniciando download do Template oficial (.${type.toUpperCase()}) para formatação dos artigos.`);
+        }
+
+        // PORTAL MODAL MANAGEMENT
+        function openPortalModal(portalType) {
+            const modal = document.getElementById('portal-modal');
+            document.querySelectorAll('.portal-view').forEach(v => v.classList.add('hidden'));
+
+            if (portalType === 'congressista') {
+                document.getElementById('modal-portal-title').innerText = "Área Restrita do Congressista";
+                document.getElementById('modal-portal-subtitle').innerText = "Painel do Participante • Submissões e Certificados";
+                document.getElementById('view-congressista-panel').classList.remove('hidden');
+            } else if (portalType === 'avaliador') {
+                document.getElementById('modal-portal-title').innerText = "Área Exclusiva do Avaliador (Parecerista)";
+                document.getElementById('modal-portal-subtitle').innerText = "Sistema de Avaliação Paritária Cega (Peer Review)";
+                document.getElementById('view-avaliador-panel').classList.remove('hidden');
+            } else if (portalType === 'cms') {
+                document.getElementById('modal-portal-title').innerText = "Painel Administrativo CMS (Comissão)";
+                document.getElementById('modal-portal-subtitle').innerText = "Gestão de Volumetria, Disparos e Prazos";
+                document.getElementById('view-cms-panel').classList.remove('hidden');
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closePortalModal() {
+            document.getElementById('portal-modal').classList.add('hidden');
+        }
+
+        // MEUS TRABALHOS DO CONGRESSISTA
+        function renderUserPapers() {
+            const container = document.getElementById('user-papers-list');
+            container.innerHTML = '';
+            document.getElementById('user-submissoes-count').innerText = STATE.userPapers.length;
+
+            STATE.userPapers.forEach(paper => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 rounded-xl border border-slate-200 space-y-3";
+                
+                let statusBadge = "bg-amber-100 text-amber-800";
+                if(paper.status.includes('Aprovado')) statusBadge = "bg-emerald-100 text-emerald-800";
+                if(paper.status.includes('Rejeitado')) statusBadge = "bg-rose-100 text-rose-800";
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start gap-2">
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400">ID #${paper.id} • ${paper.versao}</span>
+                            <h4 class="font-bold text-slate-900 text-sm">${paper.titulo}</h4>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-full ${statusBadge}">${paper.status}</span>
+                    </div>
+                    <div class="text-xs text-slate-600">
+                        <strong>Coautores:</strong> ${paper.coautores} | <strong>Eixo:</strong> ${paper.eixo}
+                    </div>
+                    ${paper.parecer ? `
+                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs space-y-1">
+                            <strong class="text-amber-900 block"><i class="fa-solid fa-comment-dots mr-1"></i> Parecer da Comissão Científica:</strong>
+                            <p class="text-amber-800">${paper.parecer}</p>
+                        </div>
+                    ` : ''}
+                    <div class="flex justify-end gap-2 pt-1">
+                        <button onclick="resubmitPaper(${paper.id})" class="bg-water-700 text-white font-bold text-xs px-3 py-1.5 rounded-lg hover:bg-water-600 transition">
+                            <i class="fa-solid fa-arrows-rotate mr-1"></i> Enviar Versão Corrigida (V2)
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleSubmissaoForm() {
+            document.getElementById('submissao-form-container').classList.toggle('hidden');
+        }
+
+        function submitNewPaper() {
+            const titulo = document.getElementById('sub-titulo').value;
+            const eixo = document.getElementById('sub-eixo').value;
+            const modalidade = document.getElementById('sub-modalidade').value;
+            const coautores = document.getElementById('sub-coautores').value;
+
+            if(!titulo) {
+                alert("Por favor, informe o título do trabalho.");
+                return;
+            }
+
+            const newPaper = {
+                id: Math.floor(100 + Math.random() * 900),
+                titulo: titulo,
+                eixo: eixo,
+                modalidade: modalidade,
+                coautores: coautores || 'Autor Principal',
+                status: 'Em Análise',
+                versao: 'V1',
+                parecer: null
+            };
+
+            STATE.userPapers.push(newPaper);
+            localStorage.setItem('sbwc_user_papers', JSON.stringify(STATE.userPapers));
+            renderUserPapers();
+            toggleSubmissaoForm();
+            alert("Trabalho submetido com sucesso! O comprovante transacional foi enviado para seu e-mail.");
+        }
+
+        function resubmitPaper(id) {
+            const paper = STATE.userPapers.find(p => p.id === id);
+            if(paper) {
+                paper.versao = 'V2';
+                paper.status = 'Em Reavaliação (V2)';
+                localStorage.setItem('sbwc_user_papers', JSON.stringify(STATE.userPapers));
+                renderUserPapers();
+                alert(`Nova versão V2 do Artigo #${id} anexada com sucesso. O histórico de versões antigas permanece arquivado.`);
+            }
+        }
+
+        // ÁREA DO AVALIADOR
+        function renderEvaluatorPapers() {
+            const container = document.getElementById('evaluator-papers-list');
+            container.innerHTML = '';
+
+            STATE.evaluatorPapers.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[10px] font-mono text-slate-400">Trabalho ID #${item.id} (Avaliação Cega)</span>
+                            <h4 class="font-bold text-slate-900 text-sm">${item.titulo}</h4>
+                        </div>
+                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-full ${item.status === 'Concluído' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${item.status}</span>
+                    </div>
+
+                    ${item.status !== 'Concluído' ? `
+                        <div class="space-y-3 border-t border-slate-100 pt-3">
+                            <label class="block text-xs font-bold text-slate-700">Formulário de Barema e Recomendação Final:</label>
+                            <select id="eval-decision-${item.id}" class="w-full p-2 bg-slate-50 border rounded-lg text-xs">
+                                <option value="Aprovado na Íntegra">Aprovado na Íntegra</option>
+                                <option value="Aprovado com Correções">Aprovado com Correções</option>
+                                <option value="Rejeitado">Rejeitado</option>
+                            </select>
+                            <textarea id="eval-comments-${item.id}" placeholder="Digite o parecer descritivo fundamentado ao autor..." class="w-full p-2 bg-slate-50 border rounded-lg text-xs h-20"></textarea>
+                            <button onclick="submitEvaluation(${item.id})" class="bg-water-700 hover:bg-water-600 text-white font-bold text-xs px-4 py-2 rounded-lg transition">
+                                Enviar Parecer Científico
+                            </button>
+                        </div>
+                    ` : '<p class="text-xs text-emerald-600 font-semibold"><i class="fa-solid fa-check-double mr-1"></i> Parecer submetido e homologado pela Comissão.</p>'}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function submitEvaluation(id) {
+            const paper = STATE.evaluatorPapers.find(p => p.id === id);
+            if(paper) {
+                paper.status = 'Concluído';
+                renderEvaluatorPapers();
+                alert("Parecer técnico enviado com sucesso para a comissão científica!");
+            }
+        }
+
+        // AÇÕES DO CMS & EMAIL TRIGGERS
+        function triggerMockEmail(triggerType) {
+            alert(`[Disparo Transacional SMTP SES]\n\nTrigger executado com sucesso: "${triggerType}"\nNotificações enviadas para a lista cadastrada.`);
+        }
+
+        // GERADOR E VALIDADOR DE CERTIFICADOS
+        function generateUserCertificate(typeTitle, hours) {
+            document.getElementById('cert-user-name').innerText = "Dr. Participante Exemplo";
+            document.getElementById('cert-type-title').innerText = typeTitle;
+            document.getElementById('cert-hours').innerText = hours;
+
+            const randomHash = "SBWC-2026-" + Math.random().toString(36).substring(2, 6).toUpperCase();
+            document.getElementById('cert-hash-display').innerText = randomHash;
+
+            // Limpa QR Code anterior se houver
+            const qrContainer = document.getElementById('cert-qrcode');
+            qrContainer.innerHTML = '';
+            new QRCode(qrContainer, {
+                text: `https://sbwc2026.com.br/validar?hash=${randomHash}`,
+                width: 70,
+                height: 70
+            });
+
+            document.getElementById('certificate-modal').classList.remove('hidden');
+        }
+
+        function closeCertificateModal() {
+            document.getElementById('certificate-modal').classList.add('hidden');
+        }
+
+        function validateHashCertificate() {
+            const hash = document.getElementById('input-hash-validation').value.trim();
+            const resultDiv = document.getElementById('validation-result');
+
+            if (!hash) {
+                alert("Por favor, digite um código Hash.");
+                return;
+            }
+
+            resultDiv.classList.remove('hidden');
+            resultDiv.className = "p-4 rounded-xl border bg-emerald-50 border-emerald-300 text-emerald-900 space-y-1";
+            resultDiv.innerHTML = `
+                <div class="font-bold text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-emerald-600"></i> Certificado VÁLIDO e Autêntico!
+                </div>
+                <p class="text-xs">Documento emitido oficialmente pela Comissão Organizadora do 8º SBWC para <strong>Dr. Participante Exemplo</strong> na modalidade de Participação Geral (28h).</p>
+            `;
+        }
+    </script>
+</body>
+</html>
