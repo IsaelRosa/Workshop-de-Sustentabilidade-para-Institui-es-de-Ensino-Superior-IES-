@@ -1,0 +1,25 @@
+{
+  "name": "sbwc-platform",
+  "version": "1.0.0",
+  "description": "API Node.js + MySQL para a plataforma do 8º SBWC",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [
+    "sbwc",
+    "wetlands",
+    "congresso",
+    "mysql",
+    "node"
+  ],
+  "author": "Copilot",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.5.1"
+  }
+}

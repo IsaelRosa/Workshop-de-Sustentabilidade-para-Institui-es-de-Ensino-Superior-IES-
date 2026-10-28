@@ -1136,7 +1136,7 @@
 
     <!-- JAVASCRIPT DA APLICAÇÃO (SINGLE PAGE SPA LOGIC) -->
     <script>
-        // ESTADO GLOBAL DA APLICAÇÃO (LOCALSTORAGE)
+        // ESTADO GLOBAL DA APLICAÇÃO (LOCALSTORAGE + API)
         const STATE = {
             myAgenda: JSON.parse(localStorage.getItem('sbwc_my_agenda')) || [],
             userPapers: JSON.parse(localStorage.getItem('sbwc_user_papers')) || [
@@ -1187,8 +1187,69 @@
                     eixo: "Eixo 03",
                     doi: "10.1016/j.sbwc.2026.01.003"
                 }
-            ]
+            ],
+            agenda: null,
+            settings: {}
         };
+
+        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+            ? 'http://localhost:3000/api'
+            : '/api';
+
+        async function apiFetch(path, options = {}) {
+            const url = `${API_BASE}${path}`;
+            const response = await fetch(url, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(options.headers || {})
+                },
+                ...options
+            });
+
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(data.message || 'Erro ao consultar a API');
+            }
+            return data;
+        }
+
+        async function hydrateFromApi() {
+            try {
+                const settings = await apiFetch('/settings');
+                if (settings && Object.keys(settings).length) {
+                    STATE.settings = settings;
+                    const eventName = settings.event_name || '8º SBWC';
+                    document.title = eventName;
+                    const heading = document.querySelector('header .font-black');
+                    if (heading) {
+                        heading.innerHTML = eventName.replace('8º Simpósio Brasileiro sobre Wetlands Construídos', '8º <span class="text-emerald-400">SBWC</span>');
+                    }
+                }
+            } catch (error) {
+                console.warn('Configurações da API indisponíveis:', error.message);
+            }
+
+            try {
+                const agendaData = await apiFetch('/agenda?day=1');
+                if (agendaData && Array.isArray(agendaData.items)) {
+                    STATE.agenda = agendaData.items;
+                }
+            } catch (error) {
+                console.warn('Agenda da API indisponível:', error.message);
+            }
+
+            try {
+                const proceedingsData = await apiFetch('/proceedings');
+                if (proceedingsData && Array.isArray(proceedingsData.items)) {
+                    STATE.proceedings = proceedingsData.items;
+                }
+            } catch (error) {
+                console.warn('Anais da API indisponíveis:', error.message);
+            }
+
+            renderSchedule(1);
+            renderProceedingsList();
+        }
 
         // SCHEDULE DATA DE 4 DIAS
         const SCHEDULE_DATA = {
@@ -1212,12 +1273,11 @@
         };
 
         // INICIALIZAÇÃO AO CARREGAR
-        window.onload = function() {
+        window.onload = async function() {
             startCountdown();
-            renderSchedule(1);
+            await hydrateFromApi();
             renderUserPapers();
             renderEvaluatorPapers();
-            renderProceedingsList();
             updateAgendaCounter();
         };
 
@@ -1263,7 +1323,17 @@
             const container = document.getElementById('schedule-container');
             container.innerHTML = '';
 
-            let list = SCHEDULE_DATA[day] || [];
+            const apiAgenda = Array.isArray(STATE.agenda) ? STATE.agenda.filter(item => Number(item.day_number) === Number(day)) : [];
+            let list = apiAgenda.length ? apiAgenda.map(item => ({
+                id: `act-${item.id}`,
+                hora: `${item.start_time.slice(0, 5)} - ${item.end_time.slice(0, 5)}`,
+                titulo: item.title,
+                local: item.location,
+                palestrante: item.speaker || 'Comissão Organizadora',
+                tipo: item.type,
+                lattes: item.lattes_url || null
+            })) : (SCHEDULE_DATA[day] || []);
+
             if (onlyFavorites) {
                 list = list.filter(item => STATE.myAgenda.includes(item.id));
             }
@@ -1366,11 +1436,11 @@
                 card.className = "bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 hover:border-water-500 transition";
                 card.innerHTML = `
                     <div class="flex justify-between items-center text-xs">
-                        <span class="bg-water-100 text-water-800 font-bold px-2.5 py-0.5 rounded-full">${art.eixo}</span>
-                        <span class="text-slate-400 font-mono">DOI: ${art.doi}</span>
+                        <span class="bg-water-100 text-water-800 font-bold px-2.5 py-0.5 rounded-full">${art.eixo || 'Eixo Geral'}</span>
+                        <span class="text-slate-400 font-mono">DOI: ${art.doi || 'Disponível em breve'}</span>
                     </div>
                     <h3 class="font-bold text-slate-900 text-base">${art.titulo}</h3>
-                    <p class="text-xs text-slate-600 font-medium">Autores: ${art.autores}</p>
+                    <p class="text-xs text-slate-600 font-medium">Autores: ${art.autores || 'Equipe do evento'}</p>
                     <div class="pt-2 flex justify-end">
                         <button onclick="downloadPaperPDF('${art.titulo}')" class="bg-water-700 hover:bg-water-600 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition flex items-center gap-1.5">
                             <i class="fa-solid fa-file-pdf"></i> Download PDF Oficial
@@ -1483,7 +1553,7 @@
             document.getElementById('submissao-form-container').classList.toggle('hidden');
         }
 
-        function submitNewPaper() {
+        async function submitNewPaper() {
             const titulo = document.getElementById('sub-titulo').value;
             const eixo = document.getElementById('sub-eixo').value;
             const modalidade = document.getElementById('sub-modalidade').value;
@@ -1494,22 +1564,56 @@
                 return;
             }
 
-            const newPaper = {
-                id: Math.floor(100 + Math.random() * 900),
-                titulo: titulo,
-                eixo: eixo,
-                modalidade: modalidade,
-                coautores: coautores || 'Autor Principal',
-                status: 'Em Análise',
-                versao: 'V1',
-                parecer: null
+            const payload = {
+                user_id: 1,
+                title: titulo,
+                thematic_axis: eixo,
+                modality: modalidade,
+                coauthors: coautores || 'Autor Principal',
+                file_name: 'arquivo.pdf',
+                file_path: '/uploads/arquivo.pdf'
             };
 
-            STATE.userPapers.push(newPaper);
-            localStorage.setItem('sbwc_user_papers', JSON.stringify(STATE.userPapers));
-            renderUserPapers();
-            toggleSubmissaoForm();
-            alert("Trabalho submetido com sucesso! O comprovante transacional foi enviado para seu e-mail.");
+            try {
+                const result = await apiFetch('/submission', {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+
+                const newPaper = {
+                    id: result.submission_id || Math.floor(100 + Math.random() * 900),
+                    titulo: titulo,
+                    eixo: eixo,
+                    modalidade: modalidade,
+                    coautores: coautores || 'Autor Principal',
+                    status: 'Em Análise',
+                    versao: 'V1',
+                    parecer: null
+                };
+
+                STATE.userPapers.push(newPaper);
+                localStorage.setItem('sbwc_user_papers', JSON.stringify(STATE.userPapers));
+                renderUserPapers();
+                toggleSubmissaoForm();
+                alert("Trabalho submetido com sucesso! O comprovante transacional foi enviado para seu e-mail.");
+            } catch (error) {
+                const newPaper = {
+                    id: Math.floor(100 + Math.random() * 900),
+                    titulo: titulo,
+                    eixo: eixo,
+                    modalidade: modalidade,
+                    coautores: coautores || 'Autor Principal',
+                    status: 'Em Análise (offline)',
+                    versao: 'V1',
+                    parecer: null
+                };
+
+                STATE.userPapers.push(newPaper);
+                localStorage.setItem('sbwc_user_papers', JSON.stringify(STATE.userPapers));
+                renderUserPapers();
+                toggleSubmissaoForm();
+                alert('API indisponível no momento; a submissão foi salva localmente no navegador.');
+            }
         }
 
         function resubmitPaper(id) {

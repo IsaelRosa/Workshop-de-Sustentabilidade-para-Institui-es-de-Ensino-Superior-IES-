@@ -18,9 +18,38 @@ Projeto de plataforma web para o 8º Simpósio Brasileiro sobre Wetlands Constru
 
 ## Como usar localmente
 
-1. Abra o `index.html` em um navegador para visualizar a interface.
-2. Para integrar com banco de dados, o ideal é converter a lógica atual em uma API PHP ou Node.js conectada ao MySQL.
-3. Importar o esquema em um banco MySQL local ou na Hostinger.
+1. Crie um arquivo `.env` a partir do `.env.example`.
+2. Importe o esquema do banco MySQL local ou no Hostinger:
+
+```bash
+mysql -u usuario -p < database/schema.sql
+```
+
+3. Inicie a API:
+
+```bash
+npm install
+npm run dev
+```
+
+4. Acesse `http://localhost:3000/api/health` para verificar o serviço.
+5. Abra o `index.html` em um navegador para visualizar a interface.
+
+## API Node.js
+
+A API foi iniciada em `src/server.js` com endpoints básicos para:
+
+- `GET /api/health`
+- `GET /api/settings`
+- `GET /api/agenda?day=1`
+- `GET /api/proceedings`
+- `GET /api/users`
+- `POST /api/register`
+- `POST /api/submission`
+- `GET /api/submissions/:userId`
+- `GET /api/certificates/:userId`
+- `POST /api/certificates/validate`
+- `POST /api/email-test`
 
 ## Banco de dados MySQL
 
