@@ -6,6 +6,7 @@ const { pool, testConnection } = require('./db');
 
 const app = express();
 const router = express.Router();
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:5500,https://localhost').split(',').map((origin) => origin.trim()).filter(Boolean);
 
 const proceedings = [
   {
@@ -31,7 +32,17 @@ const proceedings = [
   },
 ];
 
-app.use(cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error('Origem não permitida pelo CORS'));
+  },
+  credentials: true,
+}));
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 
