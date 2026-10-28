@@ -15,9 +15,15 @@ const pool = mysql.createPool({
 async function testConnection() {
   try {
     const [rows] = await pool.query('SELECT 1 + 1 AS result');
-    return rows[0]?.result === 2;
+    return {
+      ok: rows[0]?.result === 2,
+      error: null,
+    };
   } catch (error) {
-    return false;
+    return {
+      ok: false,
+      error: error.message,
+    };
   }
 }
 

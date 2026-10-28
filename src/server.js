@@ -49,12 +49,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', router);
 
 router.get('/health', async (req, res) => {
-  const dbOk = await testConnection();
+  const dbStatus = await testConnection();
 
   res.json({
     ok: true,
     message: 'SBWC API online',
-    database: dbOk ? 'connected' : 'offline',
+    database: dbStatus.ok ? 'connected' : 'offline',
+    dbHost: process.env.DB_HOST || 'localhost',
+    dbName: process.env.DB_NAME || 'sbwc_platform',
+    databaseError: dbStatus.error || null,
     timestamp: new Date().toISOString(),
   });
 });
