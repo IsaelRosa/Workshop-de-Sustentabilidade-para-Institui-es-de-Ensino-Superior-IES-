@@ -16,6 +16,10 @@ Projeto de plataforma web para o 8º Simpósio Brasileiro sobre Wetlands Constru
 - `database/seed.sql` — dados iniciais para testes e homologação
 - `database/hostinger.md` — instruções para deploy na Hostinger
 
+## Deploy final para Hostinger
+
+A documentação final de implantação está em [HOSTINGER_DEPLOY.md](./HOSTINGER_DEPLOY.md).
+
 ## Como usar localmente
 
 1. Crie um arquivo `.env` a partir do `.env.example`.
