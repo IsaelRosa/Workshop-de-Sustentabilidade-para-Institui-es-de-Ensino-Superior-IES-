@@ -35,6 +35,18 @@ npm run dev
 4. Acesse `http://localhost:3000/api/health` para verificar o serviço.
 5. Abra o `index.html` em um navegador para visualizar a interface.
 
+## Configuração da API em produção
+
+Se o frontend e a API estiverem em domínios diferentes, configure a URL da API antes do carregamento principal:
+
+```html
+<script>
+  window.SBWC_API_BASE = 'https://api.seu-dominio.com/api';
+</script>
+```
+
+Se a API estiver no mesmo domínio, pode manter `/api`.
+
 ## API Node.js
 
 A API foi iniciada em `src/server.js` com endpoints básicos para:

@@ -1193,9 +1193,15 @@
             settings: {}
         };
 
-        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-            ? 'http://localhost:3000/api'
-            : '/api';
+        const configuredApiBase = typeof window !== 'undefined' && window.SBWC_API_BASE
+            ? window.SBWC_API_BASE.replace(/\/$/, '')
+            : null;
+
+        const API_BASE = configuredApiBase || (
+            (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+                ? 'http://localhost:3000/api'
+                : '/api'
+        );
 
         async function apiFetch(path, options = {}) {
             const url = `${API_BASE}${path}`;
